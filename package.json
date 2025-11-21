@@ -1,15 +1,18 @@
 {
   "type": "module",
   "dependencies": {
-    "@aztec/bb.js": "^2.1.7"
+    "@aztec/bb.js": "^2.1.7",
+    "buffer": "^6.0.3"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
     "tsx": "^4.0.0",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "vite": "^7.2.4"
   },
   "scripts": {
     "prove": "tsx prove.ts",
-    "verify": "tsx verify.ts"
+    "verify": "tsx verify.ts",
+    "dev": "vite"
   }
 }

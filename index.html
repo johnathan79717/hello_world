@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aztec Barretenberg - Browser Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .output {
+            background: #f5f5f5;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        .success {
+            color: green;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Aztec Barretenberg Browser Demo</h1>
+
+    <div>
+        <button id="proveBtn">Generate Proof</button>
+        <button id="verifyBtn" disabled>Verify Proof</button>
+    </div>
+
+    <div id="output" class="output">Ready to generate proof...</div>
+
+    <script type="module">
+        // Set up Buffer polyfill before loading other modules
+        import { Buffer } from 'buffer';
+        window.Buffer = Buffer;
+        globalThis.Buffer = Buffer;
+
+        // Now load the main script
+        import('./browser.js');
+    </script>
+</body>
+</html>
