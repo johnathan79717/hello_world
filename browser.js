@@ -46,9 +46,27 @@ proveBtn.addEventListener('click', async () => {
         log('Circuit data loaded successfully');
 
         log('Initializing backend...');
-        backend = new UltraHonkBackend(bytecode, { threads: 'auto' });
+
+        // Add logger to see internal bb.js messages
+        const bbLogger = (msg) => {
+            console.log('[BB.js]', msg);
+            log(`[BB.js] ${msg}`);
+        };
+
+        backend = new UltraHonkBackend(bytecode, {
+            threads: 'auto',
+            logger: bbLogger
+        });
         log('Backend initialized');
         log(`Using ${navigator.hardwareConcurrency || 'unknown'} CPU cores`);
+
+        // Check if SharedArrayBuffer is available
+        if (typeof SharedArrayBuffer === 'undefined') {
+            log('WARNING: SharedArrayBuffer not available - threading disabled!', 'error');
+            log('This will cause very slow proof generation', 'error');
+        } else {
+            log('SharedArrayBuffer available - threading enabled', 'success');
+        }
 
         log('Generating proof (this may take 30-60 seconds in the browser)...');
         const startTime = Date.now();
