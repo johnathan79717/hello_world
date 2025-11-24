@@ -26,9 +26,22 @@ async function loadCircuitData() {
 
         // Load witness data
         const witnessResponse = await fetch('./target/hello_world.gz');
-        const witnessBuffer = await witnessResponse.arrayBuffer();
 
-        return { bytecode, witnessBuffer: new Uint8Array(witnessBuffer) };
+        // Check response headers
+        console.log('Response headers:', {
+            contentType: witnessResponse.headers.get('content-type'),
+            contentEncoding: witnessResponse.headers.get('content-encoding'),
+            contentLength: witnessResponse.headers.get('content-length'),
+        });
+
+        const witnessBuffer = await witnessResponse.arrayBuffer();
+        const witnessArray = new Uint8Array(witnessBuffer);
+
+        // Check if data is actually gzipped (should start with 1f 8b)
+        console.log('First 4 bytes:', Array.from(witnessArray.slice(0, 4)).map(b => b.toString(16).padStart(2, '0')).join(' '));
+        console.log('Witness buffer size:', witnessArray.length);
+
+        return { bytecode, witnessBuffer: witnessArray };
     } catch (error) {
         console.error('Full error:', error);
         log(`Error loading circuit data: ${error.message || error}`, 'error');
