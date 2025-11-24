@@ -1,19 +1,23 @@
 import { defineConfig } from 'vite';
+import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
 export default defineConfig({
-  define: {
-    global: 'globalThis',
+  plugins: [
+    nodePolyfills({
+      // Enable specific polyfills
+      globals: {
+        Buffer: true,
+        global: true,
+        process: true,
+      },
+    }),
+  ],
+  optimizeDeps: {
+    exclude: ['@aztec/bb.js'],
   },
   resolve: {
     alias: {
-      buffer: 'buffer',
-    },
-  },
-  optimizeDeps: {
-    esbuildOptions: {
-      define: {
-        global: 'globalThis',
-      },
+      pino: 'pino/browser.js',
     },
   },
   server: {

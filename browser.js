@@ -30,7 +30,8 @@ async function loadCircuitData() {
 
         return { bytecode, witnessBuffer: new Uint8Array(witnessBuffer) };
     } catch (error) {
-        log(`Error loading circuit data: ${error.message}`, 'error');
+        console.error('Full error:', error);
+        log(`Error loading circuit data: ${error.message || error}`, 'error');
         throw error;
     }
 }
